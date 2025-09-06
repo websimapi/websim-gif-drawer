@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>GIF Drawer</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "gif.js": "https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>GIF Drawer</h1>
+        </header>
+
+        <main>
+            <div id="canvas-container">
+                <canvas id="drawing-canvas"></canvas>
+            </div>
+            <div id="ui-container">
+                <div class="frame-controls">
+                    <button id="prev-frame"><img src="prev.png" alt="Previous Frame"></button>
+                    <span id="frame-counter">Frame 1 / 1</span>
+                    <button id="next-frame"><img src="next.png" alt="Next Frame"></button>
+                    <button id="add-frame"><img src="add.png" alt="Add Frame"></button>
+                </div>
+                
+                <div class="tool-controls">
+                    <div class="tool">
+                        <label for="color-picker">Color</label>
+                        <input type="color" id="color-picker" value="#000000">
+                    </div>
+                    <div class="tool">
+                        <label for="brush-size">Size</label>
+                        <input type="range" id="brush-size" min="1" max="50" value="5">
+                    </div>
+                    <div class="tool action-buttons">
+                        <button id="eraser-tool"><img src="eraser.png" alt="Eraser"></button>
+                        <button id="clear-frame"><img src="clear.png" alt="Clear Frame"></button>
+                    </div>
+                </div>
+
+                <div class="gif-controls">
+                    <h2>Export GIF</h2>
+                    <div class="tool">
+                        <label for="frame-delay">Speed (ms delay)</label>
+                        <input type="number" id="frame-delay" value="100" min="10">
+                    </div>
+                    <button id="generate-gif">Generate GIF</button>
+                    <div id="gif-output" class="hidden">
+                        <h3>Your GIF:</h3>
+                        <img id="gif-preview" src="" alt="Generated GIF">
+                        <a id="download-link" download="animation.gif">Download GIF</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Built by an AI collaborator</p>
+        </footer>
+    </div>
+    <script type="module" src="main.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+

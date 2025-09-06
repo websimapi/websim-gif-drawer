@@ -1,0 +1,226 @@
+:root {
+    --primary-bg: #f0f2f5;
+    --secondary-bg: #ffffff;
+    --primary-text: #1c1e21;
+    --accent-color: #007bff;
+    --border-color: #dddfe2;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    overscroll-behavior: contain;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--secondary-bg);
+    box-shadow: 0 0 15px var(--shadow-color);
+}
+
+header {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    z-index: 10;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#canvas-container {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-bg);
+}
+
+#drawing-canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+#ui-container {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.frame-controls, .tool-controls, .gif-controls {
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.frame-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#frame-counter {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.tool-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    align-items: center;
+}
+
+.tool {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tool label {
+    font-weight: 500;
+}
+
+.action-buttons {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+button, input {
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+button {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #f5f6f7;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
+    background-color: #e9eaeb;
+}
+
+button:active, button.active {
+    background-color: #dde0e3;
+    border-color: var(--accent-color);
+}
+
+button img {
+    width: 24px;
+    height: 24px;
+}
+
+#color-picker {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#color-picker::-webkit-color-swatch {
+    border-radius: 5px;
+    border: none;
+}
+
+#color-picker::-moz-color-swatch {
+    border-radius: 5px;
+    border: none;
+}
+
+
+#generate-gif {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    font-weight: bold;
+}
+
+#generate-gif:hover {
+    opacity: 0.9;
+}
+
+#gif-output {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#gif-output.hidden {
+    display: none;
+}
+
+#gif-preview {
+    max-width: 100%;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    margin: 0.5rem 0;
+}
+
+#download-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+footer {
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    color: #6c757d;
+    background-color: var(--primary-bg);
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
