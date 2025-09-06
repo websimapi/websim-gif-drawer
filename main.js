@@ -97,12 +97,16 @@ function stopDrawing() {
 
 // --- Frame Management ---
 function saveCurrentFrame() {
-    frames[currentFrame] = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const c = document.createElement('canvas');
+    c.width = canvas.width; c.height = canvas.height;
+    c.getContext('2d').drawImage(canvas, 0, 0);
+    frames[currentFrame] = c;
 }
 
 function loadFrame(index) {
     if (frames[index]) {
-        ctx.putImageData(frames[index], 0, 0);
+        clearCanvas();
+        ctx.drawImage(frames[index], 0, 0);
     } else {
         clearCanvas();
     }
@@ -112,16 +116,11 @@ function loadFrame(index) {
 
 function addFrame() {
     saveCurrentFrame();
-    const newFrameData = ctx.createImageData(canvas.width, canvas.height);
-    // Fill new frame with white
-    const data = newFrameData.data;
-    for (let i = 0; i < data.length; i += 4) {
-        data[i] = 255;
-        data[i + 1] = 255;
-        data[i + 2] = 255;
-        data[i + 3] = 255;
-    }
-    frames.splice(currentFrame + 1, 0, newFrameData);
+    const c = document.createElement('canvas');
+    c.width = canvas.width; c.height = canvas.height;
+    const cctx = c.getContext('2d');
+    cctx.fillStyle = 'white'; cctx.fillRect(0, 0, c.width, c.height);
+    frames.splice(currentFrame + 1, 0, c);
     loadFrame(currentFrame + 1);
 }
 
@@ -177,8 +176,8 @@ function generateGif() {
     
     const delay = parseInt(frameDelayInput.value, 10);
 
-    frames.forEach(frameData => {
-        gif.addFrame(frameData, { delay: delay });
+    frames.forEach(frameCanvas => {
+        gif.addFrame(frameCanvas, { delay, copy: true });
     });
 
     gif.on('finished', (blob) => {
@@ -194,17 +193,16 @@ function generateGif() {
     gif.render();
 }
 
-
 // --- Event Listeners ---
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseleave', stopDrawing);
 
-canvas.addEventListener('touchstart', startDrawing);
-canvas.addEventListener('touchmove', draw);
-canvas.addEventListener('touchend', stopDrawing);
-canvas.addEventListener('touchcancel', stopDrawing);
+canvas.addEventListener('touchstart', startDrawing, { passive: false });
+canvas.addEventListener('touchmove', draw, { passive: false });
+canvas.addEventListener('touchend', stopDrawing, { passive: false });
+canvas.addEventListener('touchcancel', stopDrawing, { passive: false });
 
 eraserTool.addEventListener('click', toggleEraser);
 clearFrameBtn.addEventListener('click', () => {
