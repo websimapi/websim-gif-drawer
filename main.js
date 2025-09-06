@@ -160,24 +160,37 @@ function toggleEraser() {
 
 // --- GIF Generation ---
 function generateGif() {
-    generateGifBtn.textContent = 'Generating...';
+    generateGifBtn.textContent = '0%';
     generateGifBtn.disabled = true;
+
+    // Final save before render
+    saveCurrentFrame();
+
+    const renderW = canvas.width;
+    const renderH = canvas.height;
+    const delay = Math.max(10, parseInt(frameDelayInput.value, 10) || 100);
 
     const gif = new GIF({
         workers: 2,
         quality: 10,
-        width: canvas.width,
-        height: canvas.height,
+        width: renderW,
+        height: renderH,
         workerScript: 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'
     });
-    
-    // Final save before render
-    saveCurrentFrame();
-    
-    const delay = parseInt(frameDelayInput.value, 10);
 
-    frames.forEach(frameCanvas => {
-        gif.addFrame(frameCanvas, { delay, copy: true });
+    // Normalize each frame to the render size
+    frames.forEach((frameCanvas) => {
+        const tmp = document.createElement('canvas');
+        tmp.width = renderW; tmp.height = renderH;
+        const tctx = tmp.getContext('2d');
+        tctx.fillStyle = 'white';
+        tctx.fillRect(0, 0, renderW, renderH);
+        tctx.drawImage(frameCanvas, 0, 0, renderW, renderH);
+        gif.addFrame(tmp, { delay });
+    });
+
+    gif.on('progress', (p) => {
+        generateGifBtn.textContent = `${Math.round(p * 100)}%`;
     });
 
     gif.on('finished', (blob) => {
@@ -185,7 +198,6 @@ function generateGif() {
         gifPreview.src = url;
         downloadLink.href = url;
         gifOutput.classList.remove('hidden');
-        
         generateGifBtn.textContent = 'Generate GIF';
         generateGifBtn.disabled = false;
     });
