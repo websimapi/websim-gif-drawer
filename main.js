@@ -222,4 +222,3 @@ generateGifBtn.addEventListener('click', generateGif);
 
 // --- Initialization ---
 window.addEventListener('load', initializeCanvas);
-
