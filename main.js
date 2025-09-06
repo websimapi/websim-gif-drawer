@@ -1,5 +1,3 @@
-import GIF from 'gif.js';
-
 // --- DOM Elements ---
 const canvas = document.getElementById('drawing-canvas');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
